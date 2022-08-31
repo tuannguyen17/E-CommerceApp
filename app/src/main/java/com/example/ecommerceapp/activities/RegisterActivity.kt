@@ -38,11 +38,7 @@ class RegisterActivity : BaseActivity() {
         setupActionBar()
 
         binding.btnRegister.setOnClickListener { registerUser() }
-        binding.tvLogin.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        binding.tvLogin.setOnClickListener { onBackPressed() }
     }
 
     private fun setupActionBar() {
@@ -95,9 +91,7 @@ class RegisterActivity : BaseActivity() {
                     showErrorSnackBar(resources.getString(R.string.err_msg_agree_terms_and_condition), true)
                     false
                 }
-                else -> {
-                    true
-                }
+                else -> true
             }
         }
     }
@@ -106,6 +100,7 @@ class RegisterActivity : BaseActivity() {
 
         // Check with validate function if the entries are valid or not.
         if (validateRegisterDetails()) {
+            showProgressDialog(resources.getString(R.string.please_wait))
 
             val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
             val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
@@ -114,6 +109,7 @@ class RegisterActivity : BaseActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
+                        hideProgressDialog()
 
                         // If the registration is successfully done
                         if (task.isSuccessful) {
@@ -125,6 +121,9 @@ class RegisterActivity : BaseActivity() {
                                 "You are registered successfully. Your user id is ${firebaseUser.uid}",
                                 false
                             )
+
+                            FirebaseAuth.getInstance().signOut()
+                            finish()
                         } else {
                             // If the registering is not successful then show error message.
                             showErrorSnackBar(task.exception!!.message.toString(), true)
