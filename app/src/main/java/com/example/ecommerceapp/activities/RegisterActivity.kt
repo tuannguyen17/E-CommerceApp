@@ -42,8 +42,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     private fun setupActionBar() {
-        val tbRegisterActivity: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_register_activity)
-        setSupportActionBar(findViewById(R.id.toolbar_register_activity))
+        setSupportActionBar(binding.toolbarRegisterActivity)
 
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -51,7 +50,7 @@ class RegisterActivity : BaseActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24)
         }
 
-        tbRegisterActivity.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbarRegisterActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
     private fun validateRegisterDetails(): Boolean {

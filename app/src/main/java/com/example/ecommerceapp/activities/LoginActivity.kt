@@ -33,7 +33,10 @@ class LoginActivity : BaseActivity() {
         }
 
         binding.apply {
-            tvForgotPassword.setOnClickListener{}
+            tvForgotPassword.setOnClickListener{
+                val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+                startActivity(intent)
+            }
             btnLogin.setOnClickListener { logInRegisteredUser() }
             tvRegister.setOnClickListener{
                 val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
