@@ -5,7 +5,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatButton
 
-class MSPButton(context: Context, attrs: AttributeSet) : AppCompatButton(context, attrs) {
+class CustomButton(context: Context, attrs: AttributeSet) : AppCompatButton(context, attrs) {
     init {
         applyFont()
     }

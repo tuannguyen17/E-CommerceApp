@@ -7,7 +7,7 @@
     android:background="@drawable/img_splash_background"
     tools:context=".activities.SplashActivity">
 
-    <com.example.ecommerceapp.utils.MSPTextViewBold
+    <com.example.ecommerceapp.utils.CustomTextViewBold
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

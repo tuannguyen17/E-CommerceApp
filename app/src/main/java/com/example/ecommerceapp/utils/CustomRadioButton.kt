@@ -3,9 +3,9 @@ package com.example.ecommerceapp.utils
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatRadioButton
 
-class MSPTextViewBold(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {
+class CustomRadioButton(context: Context, attrs: AttributeSet) : AppCompatRadioButton(context, attrs) {
     init {
         applyFont()
     }

@@ -11,6 +11,7 @@ import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.ActivityLoginBinding
 import com.example.ecommerceapp.firestore.FirestoreClass
 import com.example.ecommerceapp.models.User
+import com.example.ecommerceapp.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity() {
@@ -93,7 +94,15 @@ class LoginActivity : BaseActivity() {
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
 
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        if (!user.profileCompleted) {
+            // If the user profile is incomplete then launch the UserProfileActivity.
+            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
+        } else {
+            // Redirect the user to Main Screen after log in.
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
         finish()
     }
 }

@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_progress_text"/>
 
-    <com.example.ecommerceapp.utils.MSPTextView
+    <com.example.ecommerceapp.utils.CustomTextView
         android:id="@+id/tv_progress_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
