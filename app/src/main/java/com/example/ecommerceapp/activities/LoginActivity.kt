@@ -2,15 +2,15 @@ package com.example.ecommerceapp.activities
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.TextView
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.ActivityLoginBinding
+import com.example.ecommerceapp.firestore.FirestoreClass
+import com.example.ecommerceapp.models.User
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity() {
@@ -62,8 +62,6 @@ class LoginActivity : BaseActivity() {
     private fun logInRegisteredUser() {
 
         if (validateLoginDetails()) {
-
-            // Show the progress dialog.
             showProgressDialog(resources.getString(R.string.please_wait))
 
             // Get the text from editText and trim the space
@@ -78,12 +76,24 @@ class LoginActivity : BaseActivity() {
                     hideProgressDialog()
 
                     if (task.isSuccessful) {
-
-                        showErrorSnackBar("You are logged in successfully.", false)
+                        FirestoreClass().getUserDetails(this@LoginActivity)
                     } else {
                         showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
                 }
         }
+    }
+
+    fun userLoggedInSuccess(user: User) {
+
+        hideProgressDialog()
+
+        // Print the user details in the log as of now.
+        Log.i("First Name: ", user.firstName)
+        Log.i("Last Name: ", user.lastName)
+        Log.i("Email: ", user.email)
+
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 }
