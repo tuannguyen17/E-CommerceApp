@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -22,6 +23,8 @@ class UserProfileActivity : BaseActivity() {
 
     private lateinit var binding: ActivityUserProfileBinding
     private lateinit var mUserDetails: User
+    private var mSelectedImageFileUri: Uri? = null
+    private var mUserProfileImageURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,33 +70,18 @@ class UserProfileActivity : BaseActivity() {
             }
 
             btnSave.setOnClickListener {
+
                 if (validateUserProfileDetails()) {
-                    val userHashMap = HashMap<String, Any>()
-
-                    // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
-
-                    // Here we get the text from editText and trim the space
-                    val mobileNumber = etMobileNumber.text.toString().trim { it <= ' ' }
-
-                    val gender = if (rbMale.isChecked) {
-                        Constants.MALE
-                    } else {
-                        Constants.FEMALE
-                    }
-
-                    if (mobileNumber.isNotEmpty()) {
-                        userHashMap[Constants.MOBILE] = mobileNumber.toLong()
-                    }
-
-                    userHashMap[Constants.GENDER] = gender
-
                     showProgressDialog(resources.getString(R.string.please_wait))
+                    if (mSelectedImageFileUri != null) {
 
-                    // call the registerUser function of FireStore class to make an entry in the database.
-                    FirestoreClass().updateUserProfileData(
-                        this@UserProfileActivity,
-                        userHashMap
-                    )
+                        FirestoreClass().uploadImageToCloudStorage(
+                            this@UserProfileActivity,
+                            mSelectedImageFileUri
+                        )
+                    } else {
+                        updateUserProfileDetails()
+                    }
                 }
             }
         }
@@ -128,10 +116,10 @@ class UserProfileActivity : BaseActivity() {
                 if (data != null) {
                     try {
                         // The uri of selected image from phone storage.
-                        val selectedImageFileUri = data.data!!
+                        mSelectedImageFileUri = data.data!!
 
                         GlideLoader(this@UserProfileActivity).loadUserPicture(
-                            selectedImageFileUri,
+                            mSelectedImageFileUri!!,
                             binding.ivUserPhoto
                         )
                     } catch (e: IOException) {
@@ -169,6 +157,38 @@ class UserProfileActivity : BaseActivity() {
         }
     }
 
+    private fun updateUserProfileDetails() {
+
+        val userHashMap = HashMap<String, Any>()
+
+        // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
+
+        // Here we get the text from editText and trim the space
+        val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
+
+        val gender = if (binding.rbMale.isChecked) {
+            Constants.MALE
+        } else {
+            Constants.FEMALE
+        }
+
+        if (mUserProfileImageURL.isNotEmpty()) {
+            userHashMap[Constants.IMAGE] = mUserProfileImageURL
+        }
+
+        if (mobileNumber.isNotEmpty()) {
+            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+        }
+
+        userHashMap[Constants.GENDER] = gender
+
+        // call the registerUser function of FireStore class to make an entry in the database.
+        FirestoreClass().updateUserProfileData(
+            this@UserProfileActivity,
+            userHashMap
+        )
+    }
+
     fun userProfileUpdateSuccess() {
 
         // Hide the progress dialog
@@ -184,5 +204,10 @@ class UserProfileActivity : BaseActivity() {
         // Redirect to the Main Screen after profile completion.
         startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
         finish()
+    }
+
+    fun imageUploadSuccess(imageURL: String) {
+        mUserProfileImageURL = imageURL
+        updateUserProfileDetails()
     }
 }
