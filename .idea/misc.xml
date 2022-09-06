@@ -7,8 +7,12 @@
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/button_background.xml" value="0.335" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/drawable_gender_tab_selector.xml" value="0.335" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/drawable_gender_tab_text_color_selector.xml" value="0.335" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/ic_vector_dashboard.xml" value="0.335" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/ic_vector_orders.xml" value="0.335" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/ic_vector_products.xml" value="0.335" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/drawable/user_image_background.xml" value="0.335" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_base.xml" value="0.17604166666666668" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_dashboard.xml" value="0.3546875" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_forgot_password.xml" value="0.3546875" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_login.xml" value="0.3546875" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_main.xml" value="0.2826086956521739" />
@@ -16,6 +20,9 @@
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/activity_user_profile.xml" value="0.25" />
         <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/dialog_progress.xml" value="0.3546875" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/fragment_home.xml" value="0.3546875" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/layout/fragment_notifications.xml" value="0.3546875" />
+        <entry key="..\:/Users/tuann/AndroidStudioProjects/eCommerceApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3546875" />
       </map>
     </option>
   </component>

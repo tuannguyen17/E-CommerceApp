@@ -181,6 +181,7 @@ class UserProfileActivity : BaseActivity() {
         }
 
         userHashMap[Constants.GENDER] = gender
+        userHashMap[Constants.COMPLETE_PROFILE] = true
 
         // call the registerUser function of FireStore class to make an entry in the database.
         FirestoreClass().updateUserProfileData(
@@ -202,7 +203,7 @@ class UserProfileActivity : BaseActivity() {
 
 
         // Redirect to the Main Screen after profile completion.
-        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        startActivity(Intent(this@UserProfileActivity, DashboardActivity::class.java))
         finish()
     }
 
