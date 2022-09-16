@@ -7,6 +7,7 @@ import android.net.Uri
 import android.util.Log
 import com.example.ecommerceapp.activities.LoginActivity
 import com.example.ecommerceapp.activities.RegisterActivity
+import com.example.ecommerceapp.activities.SettingsActivity
 import com.example.ecommerceapp.activities.UserProfileActivity
 import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.utils.Constants
@@ -88,11 +89,19 @@ class FirestoreClass {
                         // Call a function of base activity for transferring the result to it.
                         activity.userLoggedInSuccess(user)
                     }
+
+                    is SettingsActivity ->{
+                        activity.userDetailsSuccess(user)
+                    }
                 }
             }
             .addOnFailureListener { e ->
                 when (activity) {
                     is LoginActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                    is SettingsActivity -> {
                         activity.hideProgressDialog()
                     }
                 }

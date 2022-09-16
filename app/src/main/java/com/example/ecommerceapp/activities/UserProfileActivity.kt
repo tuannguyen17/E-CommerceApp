@@ -38,14 +38,35 @@ class UserProfileActivity : BaseActivity() {
 
         // Here, the some of the edittext components are disabled because it is added at a time of Registration.
         binding.apply {
-            etFirstName.isEnabled = false
-            etFirstName.setText(mUserDetails.firstName)
+            if (!mUserDetails.profileCompleted) {
+                tvTitle.text = resources.getString(R.string.title_complete_profile)
 
-            etLastName.isEnabled = false
-            etLastName.setText(mUserDetails.lastName)
+                etFirstName.isEnabled = false
+                etFirstName.setText(mUserDetails.firstName)
 
-            etEmail.isEnabled = false
-            etEmail.setText(mUserDetails.email)
+                etLastName.isEnabled = false
+                etLastName.setText(mUserDetails.lastName)
+
+                etEmail.isEnabled = false
+                etEmail.setText(mUserDetails.email)
+            } else {
+                setupActionBar()
+
+                etFirstName.setText(mUserDetails.firstName)
+                etLastName.setText(mUserDetails.lastName)
+
+                etEmail.isEnabled = false
+                etEmail.setText(mUserDetails.email)
+
+                if (mUserDetails.mobile != 0L) {
+                    etMobileNumber.setText(mUserDetails.mobile.toString())
+                }
+                if (mUserDetails.gender == Constants.MALE) {
+                    rbMale.isChecked = true
+                } else {
+                    rbFemale.isChecked = true
+                }
+            }
 
             ivUserPhoto.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(
@@ -109,6 +130,7 @@ class UserProfileActivity : BaseActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -139,6 +161,19 @@ class UserProfileActivity : BaseActivity() {
         }
     }
 
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding.toolbarUserProfileActivity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_arrow_back_24)
+        }
+
+        binding.toolbarUserProfileActivity.setNavigationOnClickListener { onBackPressed() }
+    }
+
     private fun validateUserProfileDetails(): Boolean {
         return when {
 
@@ -161,7 +196,15 @@ class UserProfileActivity : BaseActivity() {
 
         val userHashMap = HashMap<String, Any>()
 
-        // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
+        val firstName = binding.etFirstName.text.toString().trim { it <= ' ' }
+        if (firstName != mUserDetails.firstName) {
+            userHashMap[Constants.FIRST_NAME] = firstName
+        }
+
+        val lastName = binding.etLastName.text.toString().trim { it <= ' ' }
+        if (lastName != mUserDetails.lastName) {
+            userHashMap[Constants.LAST_NAME] = lastName
+        }
 
         // Here we get the text from editText and trim the space
         val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
@@ -176,12 +219,20 @@ class UserProfileActivity : BaseActivity() {
             userHashMap[Constants.IMAGE] = mUserProfileImageURL
         }
 
-        if (mobileNumber.isNotEmpty()) {
+        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
 
-        userHashMap[Constants.GENDER] = gender
-        userHashMap[Constants.COMPLETE_PROFILE] = true
+        if (gender.isNotEmpty() && gender != mUserDetails.gender) {
+            userHashMap[Constants.GENDER] = gender
+        }
+
+        // Here if user is about to complete the profile then update the field or else no need.
+        // 0: User profile is incomplete.
+        // 1: User profile is completed.
+        if (mUserDetails.profileCompleted == true) {
+            userHashMap[Constants.COMPLETE_PROFILE] = true
+        }
 
         // call the registerUser function of FireStore class to make an entry in the database.
         FirestoreClass().updateUserProfileData(
