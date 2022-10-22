@@ -8,6 +8,7 @@ import android.webkit.MimeTypeMap
 
 object Constants {
     const val USERS: String = "users"
+    const val PRODUCTS: String = "products"
 
     const val ECOMMERCE_PREFERENCES: String = "eCommercePrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
@@ -15,7 +16,7 @@ object Constants {
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
 
     const val READ_STORAGE_PERMISSION_CODE = 2
-    const val PICK_IMAGE_REQUEST_CODE = 2
+    const val PICK_IMAGE_REQUEST_CODE = 1
 
     const val MALE: String = "Male"
     const val FEMALE: String = "Female"
@@ -28,6 +29,7 @@ object Constants {
     const val LAST_NAME: String = "lastName"
 
     const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
+    const val PRODUCT_IMAGE: String = "Product_Image"
 
     fun showImageChooser(activity: Activity) {
         // An intent for launching the image selection of phone storage.
